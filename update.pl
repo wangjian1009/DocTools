@@ -47,7 +47,9 @@ sub process {
 
   if ($base_name =~ m/\.png$/
       || $base_name =~ m/\.jpg$/
-      || $base_name =~ m/\.jpeg$/)
+      || $base_name =~ m/\.jpeg$/
+      || $base_name =~ m/\.gif$/
+     )
     {
       if (exists $pic_repo{$base_name}) {
         print $file . ": duplicate at $pic_repo{$base_name}->{path}\n";
