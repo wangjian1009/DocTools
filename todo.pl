@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use Cwd;
 use Encode;
 use File::Basename;
 use File::Find;
@@ -18,7 +19,21 @@ if (defined $user_name and $user_name eq "self") {
   close $fh;
 }
 
-my $root_dir = dirname($0);
+my $root_dir;
+my @root_dir_sep = File::Spec->splitdir(dirname($0));
+while (@root_dir_sep and $root_dir_sep[0] eq '.') {
+  shift @root_dir_sep;
+}
+
+if (@root_dir_sep == 0) {
+  $root_dir = ".."
+}
+elsif (@root_dir_sep == 1) {
+  $root_dir = ".";
+}
+else {
+  $root_dir = File::Spec->catfile(@root_dir_sep[0 .. $#root_dir_sep - 1]);
+}
 
 my @to_process_files;
 sub process {
