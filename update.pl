@@ -185,6 +185,7 @@ sub process_doc_ref {
     #print "$file:$line: $doc_name ==> $doc_path\n";
 
     next if $doc_path =~ m/^http/;
+    next if $doc_path =~ m/^#/;
 
     my $doc_full_path = File::Spec->rel2abs(File::Spec->join(dirname($file), $doc_path));
 
