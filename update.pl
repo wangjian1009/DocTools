@@ -214,7 +214,13 @@ sub process_doc_ref {
       my $file_abs = File::Spec->rel2abs(dirname($file));
       my $ref_doc_path_rel = File::Spec->abs2rel($ref_doc_path_abs, $file_abs);
 
-      ${ $row } =~ s/\[$doc_name\]\([^)]+\)/[$doc_name]($ref_doc_path_rel)/;
+      my $doc_name_match = $doc_name;
+      $doc_name_match =~ s/\(/\\\(/g;
+      $doc_name_match =~ s/\)/\\\)/g;
+      $doc_name_match =~ s/\*/\\\*/g;
+      print "update $doc_name_match\n";
+
+      ${ $row } =~ s/\[$doc_name_match\]\([^)]+\)/[$doc_name]($ref_doc_path_rel)/;
       $need_update = 1;
     }
 
