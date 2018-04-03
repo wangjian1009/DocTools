@@ -218,7 +218,7 @@ sub process_doc_ref {
       $doc_name_match =~ s/\(/\\\(/g;
       $doc_name_match =~ s/\)/\\\)/g;
       $doc_name_match =~ s/\*/\\\*/g;
-      print "update $doc_name_match\n";
+      $doc_name_match =~ s/\?/\\\?/g;
 
       ${ $row } =~ s/\[$doc_name_match\]\([^)]+\)/[$doc_name]($ref_doc_path_rel)/;
       $need_update = 1;
